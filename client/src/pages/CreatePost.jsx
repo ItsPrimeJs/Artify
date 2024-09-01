@@ -11,6 +11,7 @@ const CreatePost = () => {
     prompt: "",
     photo: "",
   });
+  
   const [generatingImage, setGeneratingImage] = useState(false);
 
   const [Loading, setLoading] = useState(false);
