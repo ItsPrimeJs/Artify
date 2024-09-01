@@ -1,5 +1,5 @@
 export const prompts = [
-    "A pretty girl named Priyanka",
+    "A pretty girl named Priyanka with curly hair and pretty eyes",
     "A futuristic city skyline at sunset with flying cars and neon lights",
     "A magical forest with glowing trees and mythical creatures",
     "A steampunk-inspired airship flying over a mountain range",
