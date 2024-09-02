@@ -16,12 +16,43 @@ const CreatePost = () => {
 
   const [Loading, setLoading] = useState(false);
 
-  const generateImage = () => {};
+  const generateImage = async () => {
+    if (form.prompt) {
+      try {
+        setGeneratingImage(true);
+        const response = await fetch('http://localhost:8080/api/v1/dalle', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ prompt: form.prompt }),
+        });
+  
+        if (!response.ok) {
+          const errorText = await response.text(); // Get the error text from the response
+          throw new Error(`Failed to generate image: ${errorText}`);
+        }
+  
+        const data = await response.json();
+        setForm({ ...form, photo: data.photo });
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        setGeneratingImage(false);
+      }
+    } else {
+      alert('Please enter a prompt');
+    }
+  };
+  
+  
   const handleSubmit = () => {};
 
+
   const handleChange = (e) => {
-    setForm({...form ,[e.target.name] : [e.target.value]});
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
+  
 
   const handleSurpriseMe = () => {
     const randomPrompt = getRandomPrompt(form.prompt);
@@ -83,7 +114,7 @@ const CreatePost = () => {
         <div className="mt-5 flex gap-5">
           <button
             className="text-white bg-green-500 rounded-md px-5 py-2.5 w-full sm:w:auto font-medium text-center"
-            type="button"
+            type="Submit"
             onClick={generateImage}
           >
             {generatingImage ? "Generating Image..." : "Generate Image"}
